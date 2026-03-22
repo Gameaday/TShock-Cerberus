@@ -1,0 +1,11 @@
+# .NET Core
+bin/
+obj/
+
+# Docker/Infrastructure Data
+bridge_data/
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db

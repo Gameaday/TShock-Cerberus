@@ -1,0 +1,22 @@
+services:
+  cerberus-bot:
+    image: historylabs/cerberus-bot:latest  # Pulls pre-built image from Docker Hub
+    container_name: cerberus-bot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      # We mount the TShock 'shared' folder so the bot can write to the DB the plugin reads
+      - ./tshock/shared:/app/shared 
+
+  tshock-server:
+    image: ryshe/terraria:latest
+    container_name: tshock-server
+    ports:
+      - "7777:7777"
+    env_file: .env
+    volumes:
+      - ./tshock/Worlds:/root/.local/share/Terraria/Worlds
+      - ./tshock/ServerPlugins:/world/ServerPlugins
+      - ./tshock/shared:/world/shared
+    depends_on:
+      - cerberus-bot
